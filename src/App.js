@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import GoogleMapReact from 'google-map-react';
+import WeatherDisplay from './WeatherDisplay';
 
-function App() {
+const App = () => {
+  const [center, setCenter] = useState({ lat: 59.95, lng: 30.33 });
+  const [zoom, setZoom] = useState(11);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
+      <div style={{ flex: 1 }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+          defaultCenter={center}
+          defaultZoom={zoom}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({ map, maps }) => {
+            // You can access the Google Maps instance here and add additional functionality if needed
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          {/* You can add markers or other custom components as children of GoogleMapReact */}
+        </GoogleMapReact>
+      </div>
+      <div style={{ flex: 1 }}>
+        <WeatherDisplay lat={center.lat} lng={center.lng} />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
