@@ -2,12 +2,19 @@ import React, { useState, useRef } from 'react';
 import GoogleMapReact from 'google-map-react';
 import WeatherDisplay from './WeatherDisplay';
 import DistanceChart from './DistanceChart';
-import { calculateRisk, GraphRisk } from './riskCalculator';
+import { calculateRiskScore } from './riskCalculator';
+
+// Change these
+const dotSafetyScore = 'Satisfactory';
+const historicalReliability = 95
+const valueOfGoods = 50000;
+const weatherConditions = 'Clear';
 
 const App = () => {
   const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
   const [zoom, setZoom] = useState(11);
   const [distanceData, setDistanceData] = useState([]);
+  const [risk, setRisk] = useState([]);
 
   const handleApiLoaded = (map, maps) => {
     const directionsService = new maps.DirectionsService();
@@ -71,7 +78,11 @@ const App = () => {
             setDistanceData(prevData => [...prevData, distance]);
 
             // Calculate the risk
-            const risk = calculateRisk(distance);
+            //const risk = (100 * calculateRiskScore(dotSafetyScore, historicalReliability, distance, valueOfGoods, weatherConditions)).toFixed(2);
+            // Calculate the risk with slight randomness involved (temporary)
+            const risk = (100 * calculateRiskScore(dotSafetyScore, historicalReliability, distance + Math.random() * 100, valueOfGoods, weatherConditions)).toFixed(2);
+            // Update the risk state
+            setRisk(prevRisk => [...prevRisk, { time: new Date(), value: risk }]);
 
             console.log(`The truck is ${distance} meters away from its expected position.`);
             console.log(`The risk is ${risk}%`);
@@ -100,7 +111,7 @@ const App = () => {
       </div>
       <div style={{ flex: 1 }}>
         <WeatherDisplay lat={center.lat} lng={center.lng} />
-        <DistanceChart data={distanceData} />
+        <DistanceChart data={risk} />
       </div>
     </div>
   );

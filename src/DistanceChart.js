@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-// Import Chart, LineController, and other necessary modules from 'chart.js'
 import { 
   Chart, 
   LineController, 
@@ -16,7 +15,6 @@ const DistanceChart = ({ data }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    // Register the components and controllers you will use
     Chart.register(
       LineController,
       CategoryScale, 
@@ -30,33 +28,32 @@ const DistanceChart = ({ data }) => {
 
     const myChart = chartRef.current;
     if (myChart) {
-      // If a chart instance already exists, destroy it before creating a new one
       if (window.myChartInstance) {
         window.myChartInstance.destroy();
       }
-      // Create a new Chart instance and assign it to a global variable for later access
       window.myChartInstance = new Chart(myChart, {
-        type: 'line', // This now works because LineController is registered
+        type: 'line',
         data: {
-          labels: data.map((_, i) => i),
+          labels: data.slice(-10).map(item => new Date(item.time).toLocaleTimeString()), // Use the reported time as the label
           datasets: [{
-            label: 'Distance Delta',
-            data: data,
+            label: 'Risk Probability',
+            data: data.slice(-10).map(item => item.value), // Use the value for the data
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
           }]
         },
         options: {
+          animation: false,
           scales: {
-            y: { // Ensure it uses the registered LinearScale
-              beginAtZero: true
+            y: {
+              min: 0,
+              max: 100,
             }
           }
         }
       });
     }
-    // Cleanup function to destroy the chart instance when the component unmounts
     return () => {
       if (window.myChartInstance) {
         window.myChartInstance.destroy();
