@@ -14,7 +14,7 @@ const App = () => {
   const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
   const [zoom, setZoom] = useState(11);
   const [distanceData, setDistanceData] = useState([]);
-  const [risk, setRisk] = useState([]);
+  const [risk, setRisk] = useState(Array(10).fill(null));
 
   const handleApiLoaded = (map, maps) => {
     const directionsService = new maps.DirectionsService();
@@ -82,7 +82,7 @@ const App = () => {
             // Calculate the risk with slight randomness involved (temporary)
             const risk = (100 * calculateRiskScore(dotSafetyScore, historicalReliability, distance + Math.random() * 100, valueOfGoods, weatherConditions)).toFixed(2);
             // Update the risk state
-            setRisk(prevRisk => [...prevRisk, { time: new Date(), value: risk }]);
+            setRisk(prevRisk => [...prevRisk.slice(1), { time: new Date(), value: risk }]);
 
             console.log(`The truck is ${distance} meters away from its expected position.`);
             console.log(`The risk is ${risk}%`);
