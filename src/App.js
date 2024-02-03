@@ -1,12 +1,10 @@
 import React, { useState, useRef } from 'react';
 import GoogleMapReact from 'google-map-react';
 import WeatherDisplay from './WeatherDisplay';
-import HoustonTrafficNews from './HoustonTrafficNews';
 
 const App = () => {
   const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
   const [zoom, setZoom] = useState(11);
-  const apiKey = 'CiZjjRXogDTukTDGnzwgSbvzsIObmGaP'; // Replace with your TomTom API key
 
   const handleApiLoaded = (map, maps) => {
     const directionsService = new maps.DirectionsService();
@@ -66,6 +64,10 @@ const App = () => {
         }, delay);
       }
     });
+
+    const trafficLayer = new maps.TrafficLayer();
+    trafficLayer.setMap(map);
+
   };
 
   return (
@@ -81,10 +83,6 @@ const App = () => {
       </div>
       <div style={{ flex: 1 }}>
         <WeatherDisplay lat={center.lat} lng={center.lng} />
-      </div>
-
-      <div>
-        <HoustonTrafficNews/>
       </div>
       
     </div>
