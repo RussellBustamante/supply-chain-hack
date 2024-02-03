@@ -95,7 +95,7 @@ const App = () => {
       </div>
       <div style={{ flex: 1 }}>
         <WeatherDisplay lat={center.lat} lng={center.lng} />
-        <DistanceChart data={distanceData} /> {/* Add DistanceChart here */}
+        <DistanceChart data={distanceData} />
       </div>
     </div>
   );
