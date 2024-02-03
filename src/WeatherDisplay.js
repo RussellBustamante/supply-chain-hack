@@ -23,7 +23,7 @@ const WeatherDisplay = ({ lat, lng }) => {
           <p>Humidity: {weatherData.current.humidity}%</p>
           <p>Wind Speed: {weatherData.current.wind_speed}</p>
 
-          <h2>Hourly Forecast</h2>
+          {/* <h2>Hourly Forecast</h2>
           {weatherData.hourly.map((hour, index) => (
             <div key={index}>
               <h3>{new Date(hour.dt * 1000).toLocaleTimeString()}</h3>
@@ -39,7 +39,7 @@ const WeatherDisplay = ({ lat, lng }) => {
               <p>{day.weather[0].main}</p>
               <p>Temperature: {day.temp.day}</p>
             </div>
-          ))}
+          ))} */}
         </div>
       )}
     </div>

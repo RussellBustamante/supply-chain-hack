@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
 import GoogleMapReact from 'google-map-react';
 import WeatherDisplay from './WeatherDisplay';
+import DistanceChart from './DistanceChart';
 
 const App = () => {
   const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
   const [zoom, setZoom] = useState(11);
+  const [distanceData, setDistanceData] = useState([]);
 
   const handleApiLoaded = (map, maps) => {
     const directionsService = new maps.DirectionsService();
@@ -21,6 +23,13 @@ const App = () => {
     directionsService.route(request, (result, status) => {
       if (status === 'OK') {
         directionsRenderer.setDirections(result);
+
+        // Log any warnings
+        for (let route of result.routes) {
+          for (let warning of route.warnings) {
+            console.log(warning);
+          }
+        }
   
         // Create a marker that represents the truck
         const truckMarker = new maps.Marker({
@@ -57,6 +66,9 @@ const App = () => {
             // Calculate the distance between the current and expected positions
             const distance = maps.geometry.spherical.computeDistanceBetween(currentPosition, expectedPosition);
 
+            // Update the distanceData state
+            setDistanceData(prevData => [...prevData, distance]);
+
             console.log(`The truck is ${distance} meters away from its expected position.`);
 
             step++;
@@ -83,8 +95,8 @@ const App = () => {
       </div>
       <div style={{ flex: 1 }}>
         <WeatherDisplay lat={center.lat} lng={center.lng} />
+        <DistanceChart data={distanceData} /> {/* Add DistanceChart here */}
       </div>
-      
     </div>
   );
 };
