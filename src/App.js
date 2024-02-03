@@ -21,6 +21,13 @@ const App = () => {
     directionsService.route(request, (result, status) => {
       if (status === 'OK') {
         directionsRenderer.setDirections(result);
+
+        // Log any warnings
+        for (let route of result.routes) {
+          for (let warning of route.warnings) {
+            console.log(warning);
+          }
+        }
   
         // Create a marker that represents the truck
         const truckMarker = new maps.Marker({
