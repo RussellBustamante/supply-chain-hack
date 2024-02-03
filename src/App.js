@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import GoogleMapReact from 'google-map-react';
 import WeatherDisplay from './WeatherDisplay';
 import DistanceChart from './DistanceChart';
+import { calculateRisk, GraphRisk } from './riskCalculator';
 
 const App = () => {
   const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
@@ -69,7 +70,11 @@ const App = () => {
             // Update the distanceData state
             setDistanceData(prevData => [...prevData, distance]);
 
+            // Calculate the risk
+            const risk = calculateRisk(distance);
+
             console.log(`The truck is ${distance} meters away from its expected position.`);
+            console.log(`The risk is ${risk}%`);
 
             step++;
           }
