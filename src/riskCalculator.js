@@ -54,6 +54,11 @@ const convertDOTSafetyScore = (dotSafetyScore) => {
         return 1; // Default to moderate risk
     }
   };
+
+  const adjustReliabilityScore = (historicalReliability) => {
+    // Inverse the score to reflect lower risk with higher reliability
+    return 1 - (historicalReliability / 100);
+  };
   
   /**
    * Calculates the overall risk score based on inputs and predefined weights.
@@ -70,7 +75,7 @@ const convertDOTSafetyScore = (dotSafetyScore) => {
   
     // Convert and normalize inputs
     const dotSafety = convertDOTSafetyScore(dotSafetyScore);
-    const reliabilityScore = historicalReliability / 100; // Assuming a 0-100 scale
+    const reliabilityScore = adjustReliabilityScore(historicalReliability); // Adjusted calculation
     const distanceScore = normalizeDistanceDeviation(distanceDeviation);
     const valueScore = categorizeValueOfGoods(valueOfGoods);
     const weatherScore = convertWeatherConditions(weatherConditions);
@@ -78,11 +83,12 @@ const convertDOTSafetyScore = (dotSafetyScore) => {
     // Calculate the weighted sum
     const riskScore = (
       (dotSafety * weights.dotSafety) +
-      (reliabilityScore * weights.reliability) +
+      (reliabilityScore * weights.reliability) + // Adjusted score
       (distanceScore * weights.distance) +
       (valueScore * weights.value) +
       (weatherScore * weights.weather)
     );
   
-    return riskScore;
+    // Adjust the final score to ensure it ranges between 0 and 1
+    return Math.min(Math.max(riskScore, 0), 1);
   };
