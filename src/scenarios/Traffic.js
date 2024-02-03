@@ -17,7 +17,7 @@ export const Traffic = ({ isWeather=false, isMap = false, isGraph = false }) => 
   const [initialDuration, setInitialDuration] = useState(null);
   const [directionsService, setDirectionsService] = useState(null);
   const request = {
-    origin: '5000 Forbes Avenue Pittsburgh PA 15213',
+    origin: '4200 Fifth Ave, Pittsburgh, PA 15260',
     destination: '5646 Northumberland St Pittsburgh PA 15217',
     travelMode: 'DRIVING',
   };
