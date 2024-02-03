@@ -61,9 +61,9 @@ const convertDOTSafetyScore = (dotSafetyScore) => {
   export const calculateRiskScore = (dotSafetyScore, historicalReliability, distanceDeviation, valueOfGoods, weatherConditions) => {
     // Define weights for each factor
     const weights = {
-      dotSafety: 0.3,
+      dotSafety: 0.25,
       reliability: 0.25,
-      distance: 0.2,
+      distance: 0.25,
       value: 0.15,
       weather: 0.1,
     };

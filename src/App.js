@@ -15,22 +15,23 @@ const App = () => {
   const [zoom, setZoom] = useState(11);
   const [distanceData, setDistanceData] = useState([]);
   const [risk, setRisk] = useState(Array(10).fill(null));
+  const [initialDuration, setInitialDuration] = useState(null);
+  const [directionsService, setDirectionsService] = useState(null);
+  const request = {
+    origin: '5000 Forbes Avenue Pittsburgh PA 15213',
+    destination: '5646 Northumberland St Pittsburgh PA 15217',
+    travelMode: 'DRIVING',
+  };
 
   const handleApiLoaded = (map, maps) => {
-    const directionsService = new maps.DirectionsService();
+    const localDirectionsService = new maps.DirectionsService();
     const directionsRenderer = new maps.DirectionsRenderer();
-  
     directionsRenderer.setMap(map);
   
-    const request = {
-      origin: '5000 Forbes Avenue Pittsburgh PA 15213',
-      destination: '5646 Northumberland St Pittsburgh PA 15217',
-      travelMode: 'DRIVING',
-    };
-  
-    directionsService.route(request, (result, status) => {
+    localDirectionsService.route(request, (result, status) => {
       if (status === 'OK') {
         directionsRenderer.setDirections(result);
+        setInitialDuration(result.routes[0].legs[0].duration.value);
 
         // Log any warnings
         for (let route of result.routes) {
@@ -93,10 +94,30 @@ const App = () => {
       }
     });
 
+    setDirectionsService(localDirectionsService); // Set the DirectionsService instance
+
     const trafficLayer = new maps.TrafficLayer();
     trafficLayer.setMap(map);
 
   };
+
+  // Consider rerouting if initial duration significantly changes
+  React.useEffect(() => {
+    if (directionsService && initialDuration) { // Ensure directionsService is not null
+      const checkForRerouting = setInterval(() => {
+        directionsService.route(request, (result, status) => {
+          if (status === 'OK') {
+            const currentDuration = result.routes[0].legs[0].duration.value;
+            if (currentDuration > initialDuration * 1.15) { // 15% longer than initial
+              console.log('Significant delay detected. Rerouting is suggested.');
+            }
+          }
+        });
+      }, 5000); // Check every 5 seconds
+  
+      return () => clearInterval(checkForRerouting);
+    }
+  }, [directionsService, initialDuration]); // Add directionsService as a dependency  
 
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
