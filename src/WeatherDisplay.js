@@ -16,8 +16,7 @@ const WeatherDisplay = ({ lat, lng }) => {
   return (
     <div>
       {weatherData && (
-        <div>
-          <h2>Current Weather</h2>
+        <div className="text-sm">
           <h3>{weatherData.current.weather[0].main}</h3>
           <p>Temperature: {weatherData.current.temp}</p>
           <p>Humidity: {weatherData.current.humidity}%</p>

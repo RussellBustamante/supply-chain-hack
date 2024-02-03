@@ -1,15 +1,55 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
-import RenderScenario from './RenderScenario';
+import Normal from './scenarios/Normal';
+import Traffic from './scenarios/Traffic';
+import Custom from './scenarios/Custom';
 
 function ShipmentDetails({ shipments }) {
     const { id } = useParams();
     const shipment = shipments.find(s => s.id.toString() === id);
     const [stars, setStars] = useState(shipment.companyRating);
 
+    const renderGraph = () => {
+        switch (shipment.scenario) {
+            case 'normal':
+                return <Normal isGraph={true} />;
+            case 'traffic':
+                return <Traffic isGraph={true} />;
+            case 'custom':
+                return <Custom isGraph={true} />;
+            default:
+                return <div>Unknown scenario: {shipment.scenario}</div>;
+        }
+    };
+    const renderWeather = () => {
+        switch (shipment.scenario) {
+            case 'normal':
+                return <Normal isWeather={true} />;
+            case 'traffic':
+                return <Traffic isWeather={true} />;
+            case 'custom':
+                return <Custom isWeather={true} />;
+            default:
+                return <div>Unknown scenario: {shipment.scenario}</div>;
+        }
+    };
+
+    const renderMap = () => {
+        switch (shipment.scenario) {
+            case 'normal':
+                return <Normal isMap={true} />;
+            case 'traffic':
+                return <Traffic isMap={true} />;
+            case 'custom':
+                return <Custom isMap={true} />;
+            default:
+                return <div>Unknown scenario: {shipment.scenario}</div>;
+        }
+    };
+
     return (
         <div className="flex flex-col h-screen bg-accent.green">
-            <div className="flex justify-center absolute top-0 right-0 mt-4 mr-4">
+            <div className="flex justify-center absolute top-0 right-0 mt-4 mr-4 z-10">
                 <Link to="/" className="w-60 flex justify-between items-center bg-pls-black px-4 py-2 rounded-md transition duration-500 ease-in-out transform hover:scale-105 hover:bg-pls-orange">
                     <span className="text-text.white font-semibold">Shipment # {id}</span>
                     <button className="text-text.white">
@@ -35,8 +75,8 @@ function ShipmentDetails({ shipments }) {
                                 </span>
                             </div>
                             <div className="flex flex-col items-center">
-                                <svg id="truck-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                                <svg id="truck-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                                 </svg>
 
                                 <span className="font-semibold">
@@ -67,8 +107,8 @@ function ShipmentDetails({ shipments }) {
                                     <p className="text-base">Left: {shipment.originDate}</p>
                                 </div>
                                 <div className="flex justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                                     </svg>
                                 </div>
                                 <div>
@@ -83,8 +123,8 @@ function ShipmentDetails({ shipments }) {
                         </div>
                     </div>
                 </div>
-                <div className="bg-green-200 h-full w-3/4 float-right">
-                    map
+                <div className="h-full w-3/4 float-right">
+                    {renderMap()}
                 </div>
             </div>
 
@@ -109,13 +149,12 @@ function ShipmentDetails({ shipments }) {
                                 <div className="text-base">out of {shipment.totalMiles}</div>
                             </div>
                             <div className="p-1">
-                                <span className="text-4xl font-normal">{shipment.temperature}°</span>
-                                <div className="text-base">need to fix</div>
+                                {renderWeather()}
                             </div>
                         </div>
                     </div>
                     <div id="shipment-overview" className="bg-white bg-opacity-90 p-2 h-full rounded-md shadow-md md:min-w-[550px] max-w-[700px]">
-                        <RenderScenario />
+                        {renderGraph()}
                     </div>
                 </div>
             </div>

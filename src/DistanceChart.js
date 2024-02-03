@@ -13,7 +13,7 @@ import {
 
 const DistanceChart = ({ data }) => {
   const chartRef = useRef(null);
-
+  // console.log('data inside DistanceChart.js', data)
   useEffect(() => {
     Chart.register(
       LineController,

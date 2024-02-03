@@ -10,7 +10,7 @@ const historicalReliability = 95
 const valueOfGoods = 50000;
 const weatherConditions = 'Clear';
 
-export const Normal = () => {
+export const Normal = ({ isWeather = false, isMap = false, isGraph = false }) => {
   const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
   const [zoom, setZoom] = useState(11);
   const [distanceData, setDistanceData] = useState([]);
@@ -27,7 +27,7 @@ export const Normal = () => {
     const localDirectionsService = new maps.DirectionsService();
     const directionsRenderer = new maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
-  
+
     localDirectionsService.route(request, (result, status) => {
       if (status === 'OK') {
         directionsRenderer.setDirections(result);
@@ -39,7 +39,7 @@ export const Normal = () => {
             console.log(warning);
           }
         }
-  
+
         // Create a marker that represents the truck
         const truckMarker = new maps.Marker({
           position: result.routes[0].legs[0].steps[0].start_location,
@@ -49,14 +49,14 @@ export const Normal = () => {
             scaledSize: new maps.Size(32, 32),
           },
         });
-  
+
         // Get the path of the route
         const path = result.routes[0].overview_path;
-  
+
         let step = 0; // the index of the current step
         let numSteps = 3000; // the number of steps in the animation
         let delay = 2000; // the delay in milliseconds between steps
-  
+
         // Start the animation
         window.setInterval(() => {
           if (step < numSteps && path[step + 1]) {
@@ -114,26 +114,33 @@ export const Normal = () => {
           }
         });
       }, 5000); // Check every 5 seconds
-  
+
       return () => clearInterval(checkForRerouting);
     }
   }, [directionsService, initialDuration]); // Add directionsService as a dependency  
 
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
-      <div style={{ flex: 1 }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-          defaultCenter={center}
-          defaultZoom={zoom}
-          yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-        />
-      </div>
-      <div style={{ flex: 1 }}>
-        <WeatherDisplay lat={center.lat} lng={center.lng} />
-        <DistanceChart data={risk} />
-      </div>
+    <div>
+      {isMap && (
+        <div style={{ height: '60vh', width: '100%' }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+            defaultCenter={center}
+            defaultZoom={zoom}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+          />
+        </div>
+      )}
+
+      {isWeather && (
+        <>
+          <WeatherDisplay lat={center.lat} lng={center.lng} />
+        </>
+      )}
+      {isGraph && (
+        <DistanceChart style={{ flex: 1 }} data={risk} />
+      )}
     </div>
   );
 };
