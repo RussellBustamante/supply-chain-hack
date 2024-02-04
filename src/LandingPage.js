@@ -15,7 +15,7 @@ const LandingPage = ({ shipments }) => {
                     </div>
                 </div>
             </div>
-            <div id="map" className="w-full md:w-2/3 bg-pink-300">
+            <div id="map" className="w-full md:w-2/3">
                 <img src="/images/homepage-map.png" alt="map of pittsburgh" className="w-full h-full object-cover" />
             </div>
         </div>

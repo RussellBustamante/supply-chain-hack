@@ -139,7 +139,16 @@ export const Normal = ({ isWeather = false, isMap = false, isGraph = false }) =>
         </>
       )}
       {isGraph && (
-        <DistanceChart style={{ flex: 1 }} data={risk} />
+        <div>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+            defaultCenter={center}
+            defaultZoom={zoom}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+          />
+          <DistanceChart style={{ flex: 1 }} data={risk} />
+        </div>
       )}
     </div>
   );

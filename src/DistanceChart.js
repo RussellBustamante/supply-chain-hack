@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { 
-  Chart, 
-  LineController, 
-  CategoryScale, 
-  LinearScale, 
-  PointElement, 
-  LineElement, 
-  Title, 
-  Tooltip, 
-  Legend 
+import {
+  Chart,
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
 } from 'chart.js';
 
 const DistanceChart = ({ data }) => {
@@ -17,12 +17,12 @@ const DistanceChart = ({ data }) => {
   useEffect(() => {
     Chart.register(
       LineController,
-      CategoryScale, 
-      LinearScale, 
-      PointElement, 
-      LineElement, 
-      Title, 
-      Tooltip, 
+      CategoryScale,
+      LinearScale,
+      PointElement,
+      LineElement,
+      Title,
+      Tooltip,
       Legend
     );
 
@@ -61,7 +61,13 @@ const DistanceChart = ({ data }) => {
     };
   }, [data]);
 
-  return <canvas ref={chartRef} />;
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+      <div style={{ width: '85%', height: '70%' }}>
+        <canvas ref={chartRef} />
+      </div>
+    </div>
+  );
 };
 
 export default DistanceChart;
