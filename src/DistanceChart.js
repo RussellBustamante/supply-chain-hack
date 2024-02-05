@@ -59,7 +59,7 @@ const DistanceChart = ({ data }) => {
               tension: 0.1
             },
             {
-              label: 'Fill',
+              label: 'Fill', // This label is used for the dataset we want to hide from the legend
               data: data.slice(-10).map(() => 100), // Create a line at the top of the chart
               fill: {
                 target: 'origin',
@@ -73,6 +73,14 @@ const DistanceChart = ({ data }) => {
           plugins: {
             filler: {
               propagate: true
+            },
+            legend: {
+              labels: {
+                filter: function(item, chart) {
+                  // Return true to include the item, false to exclude it
+                  return item.text !== 'Fill'; // Exclude 'Fill' dataset from the legend
+                }
+              }
             }
           },
           animation: false,
@@ -83,7 +91,7 @@ const DistanceChart = ({ data }) => {
             }
           }
         }
-      });
+      });      
     };
 
     // Ensure the chart is created after the component mounts and after every update
