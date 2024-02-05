@@ -8,12 +8,14 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 } from 'chart.js';
 
 const DistanceChart = ({ data }) => {
   const chartRef = useRef(null);
-  // console.log('data inside DistanceChart.js', data)
+  const chartInstanceRef = useRef(null); // Use a ref to store the chart instance
+  
   useEffect(() => {
     Chart.register(
       LineController,
@@ -23,27 +25,56 @@ const DistanceChart = ({ data }) => {
       LineElement,
       Title,
       Tooltip,
-      Legend
+      Legend,
+      Filler
     );
 
-    const myChart = chartRef.current;
-    if (myChart) {
-      if (window.myChartInstance) {
-        window.myChartInstance.destroy();
+    const createChart = () => {
+      const myChart = chartRef.current;
+      if (!myChart) return;
+
+      // Destroy the existing chart instance if it exists
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.destroy();
       }
-      window.myChartInstance = new Chart(myChart, {
+
+      const ctx = myChart.getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, myChart.height);
+      
+      gradient.addColorStop(0.25, 'red'); // Start with red
+      gradient.addColorStop(0.45, 'orange'); // Begin transition to orange
+      gradient.addColorStop(0.65, 'yellow'); // Transition to yellow
+      gradient.addColorStop(0.85, 'lime'); // Lime to introduce a smoother transition to green
+      gradient.addColorStop(0.95, 'green'); // End with green
+
+      chartInstanceRef.current = new Chart(ctx, {
         type: 'line',
         data: {
           labels: data.slice(-10).map(item => item ? new Date(item.time).toLocaleTimeString() : ''), // Use the reported time as the label
-          datasets: [{
-            label: 'Risk Probability',
-            data: data.slice(-10).map(item => item ? item.value : null), // Use the value for the data
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-          }]
+          datasets: [
+            {
+              label: 'Risk Probability',
+              data: data.slice(-10).map(item => item ? item.value : null), // Use the value for the data
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            },
+            {
+              label: 'Fill',
+              data: data.slice(-10).map(() => 100), // Create a line at the top of the chart
+              fill: {
+                target: 'origin',
+                above: gradient, // Fill the area below the line with the gradient
+              },
+              borderColor: 'transparent', // Make the line invisible
+            }
+          ]
         },
         options: {
+          plugins: {
+            filler: {
+              propagate: true
+            }
+          },
           animation: false,
           scales: {
             y: {
@@ -53,13 +84,18 @@ const DistanceChart = ({ data }) => {
           }
         }
       });
-    }
+    };
+
+    // Ensure the chart is created after the component mounts and after every update
+    requestAnimationFrame(createChart);
+
+    // Cleanup function to destroy the chart instance when the component unmounts
     return () => {
-      if (window.myChartInstance) {
-        window.myChartInstance.destroy();
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.destroy();
       }
     };
-  }, [data]);
+  }, [data]); // Re-run effect if `data` changes
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
