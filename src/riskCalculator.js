@@ -1,5 +1,3 @@
-// riskCalculator.js
-
 /**
  * Converts the DOT Safety Score to a numerical value.
  * Satisfactory = 0, Conditional = 1, Unsatisfactory = 2
@@ -19,7 +17,6 @@ const convertDOTSafetyScore = (dotSafetyScore) => {
 
 /**
  * Normalizes the distance deviation into a score.
- * This is a simple example; adjust the ranges and scores as needed.
  */
 const normalizeDistanceDeviation = (distance) => {
   if (distance <= 10) return 0;
@@ -29,20 +26,18 @@ const normalizeDistanceDeviation = (distance) => {
 
 /**
  * Categorizes the value of goods into a score.
- * Adjust the ranges based on the specifics of your operations.
+ * This is a simple model but could easily be expanded.
  */
 const categorizeValueOfGoods = (value) => {
   if (value <= 10000) return 0;
   if (value <= 50000) return 1;
-  return 2; // High-value goods
+  return 2;
 };
 
 /**
  * Converts weather conditions to a score.
- * Implement this based on your weather categorization.
  */
 const convertWeatherConditions = (weather) => {
-  // Example: Clear = 0, Rain = 1, Severe = 2
   switch (weather) {
     case 'Clear':
       return 0;

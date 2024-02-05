@@ -12,9 +12,9 @@ import {
   Filler
 } from 'chart.js';
 
-const DistanceChart = ({ data }) => {
+const RiskChart = ({ data }) => {
   const chartRef = useRef(null);
-  const chartInstanceRef = useRef(null); // Use a ref to store the chart instance
+  const chartInstanceRef = useRef(null);
   
   useEffect(() => {
     Chart.register(
@@ -50,22 +50,22 @@ const DistanceChart = ({ data }) => {
       chartInstanceRef.current = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: data.slice(-10).map(item => item ? new Date(item.time).toLocaleTimeString() : ''), // Use the reported time as the label
+          labels: data.slice(-10).map(item => item ? new Date(item.time).toLocaleTimeString() : ''),
           datasets: [
             {
               label: 'Risk Probability',
-              data: data.slice(-10).map(item => item ? item.value : null), // Use the value for the data
+              data: data.slice(-10).map(item => item ? item.value : null),
               borderColor: 'rgb(75, 192, 192)',
               tension: 0.1
             },
             {
-              label: 'Fill', // This label is used for the dataset we want to hide from the legend
-              data: data.slice(-10).map(() => 100), // Create a line at the top of the chart
+              label: 'Fill',
+              data: data.slice(-10).map(() => 100),
               fill: {
                 target: 'origin',
-                above: gradient, // Fill the area below the line with the gradient
+                above: gradient,
               },
-              borderColor: 'transparent', // Make the line invisible
+              borderColor: 'transparent',
             }
           ]
         },
@@ -77,8 +77,7 @@ const DistanceChart = ({ data }) => {
             legend: {
               labels: {
                 filter: function(item, chart) {
-                  // Return true to include the item, false to exclude it
-                  return item.text !== 'Fill'; // Exclude 'Fill' dataset from the legend
+                  return item.text !== 'Fill';
                 }
               }
             }
@@ -103,7 +102,7 @@ const DistanceChart = ({ data }) => {
         chartInstanceRef.current.destroy();
       }
     };
-  }, [data]); // Re-run effect if `data` changes
+  }, [data]); // Re-run effect if data changes
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
@@ -114,4 +113,4 @@ const DistanceChart = ({ data }) => {
   );
 };
 
-export default DistanceChart;
+export default RiskChart;

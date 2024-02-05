@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
 import WeatherDisplay from '../WeatherDisplay';
-import DistanceChart from '../DistanceChart';
+import RiskChart from '../RiskChart';
 import { calculateRiskScore } from '../riskCalculator';
 
 // Change these
@@ -147,7 +147,7 @@ export const Normal = ({ isWeather = false, isMap = false, isGraph = false }) =>
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           />
-          <DistanceChart style={{ flex: 1 }} data={risk} />
+          <RiskChart style={{ flex: 1 }} data={risk} />
         </div>
       )}
     </div>
