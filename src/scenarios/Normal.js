@@ -10,6 +10,15 @@ const historicalReliability = 95
 const valueOfGoods = 50000;
 const weatherConditions = 'Clear';
 
+/*
+    This is a Normal scenario that is used to demonstrate the basic
+    capabilities of Freight Guard and how it may be used in a real-world
+    supply chain scenario. Please note that all data used in these scenarios
+    are mock data and do not reflect the actual safety or reliability of
+    any real-world entities. However, its application to real scenarios
+    is extensible and feasible.
+*/
+
 export const Normal = ({ isWeather = false, isMap = false, isGraph = false }) => {
   const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
   const [zoom, setZoom] = useState(11);

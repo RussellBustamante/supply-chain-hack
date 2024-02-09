@@ -10,6 +10,12 @@ const historicalReliability = 95
 const valueOfGoods = 50000;
 const weatherConditions = 'Clear';
 
+/*
+    This is a Custom scenario, functionally similar to Normal, that is used to
+    demonstrate the scalability of the product and allow viewers to 
+    input their own mock shipment origin and destination.
+*/
+
 export const Custom = ({ isWeather = false, isMap = false, isGraph = false }) => {
     const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
     const [zoom, setZoom] = useState(11);

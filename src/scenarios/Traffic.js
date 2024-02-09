@@ -10,6 +10,15 @@ const historicalReliability = 95;
 const valueOfGoods = 50000;
 const weatherConditions = 'Clear';
 
+/*
+    This is a Traffic scenario that is used to highlight the risk
+    graph and calculations in the context of a traffic scenario.
+    As the truck continues on and experiences delays, the risk
+    increases due to the distance the truck is from where it is 
+    expected to be (without traffic) and the extension of its
+    estimated arrival time.
+*/
+
 export const Traffic = ({ isWeather = false, isMap = false, isGraph = false }) => {
     const [center, setCenter] = useState({ lat: 40.4432, lng: -79.9428 });
     const [zoom, setZoom] = useState(11);
