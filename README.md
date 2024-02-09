@@ -3,3 +3,7 @@ Freight Guard is an administrative internal tool built for [PLS Logsitics Servic
 
 **Note:**
 Freight Guard is designed for optimal viewing on 13-inch screens.
+
+**Examples:**
+![](./public/images/shipment-demo.png)
+![](./public/images/homepage-demo.png)

@@ -104,7 +104,7 @@ function ShipmentDetails({ shipments }) {
                             <div>
                                 <div>
                                     <h2 className="text-2xl font-medium">{shipment.originCity} </h2>
-                                    <p className="text-base">Left: {shipment.originDate}</p>
+                                    <p className="text-base">Departed: {shipment.originDate}</p>
                                 </div>
                                 <div className="flex justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
@@ -125,6 +125,11 @@ function ShipmentDetails({ shipments }) {
                 </div>
                 <div className="h-full w-3/4 float-right">
                     {renderMap()}
+                    {shipment.id !== 1 && (
+                        <div className="relative bottom-0 right-0 p-2 text-xs text-right text-gray-500">
+                            Route sped up for demonstration purposes
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -155,6 +160,7 @@ function ShipmentDetails({ shipments }) {
                     </div>
                     <div id="shipment-overview" className="bg-white bg-opacity-90 p-2 h-full rounded-md shadow-md md:min-w-[550px] max-w-[700px]">
                         {renderGraph()}
+
                     </div>
                 </div>
             </div>
