@@ -8,7 +8,7 @@ const ShipmentCard = ({ shipment }) => {
         <div className="flex flex-col items-center">
           <h5 className="text-2xl text-text.default group-hover:text-text.white">
             Shipment
-            <span className={`ml-2 ${[1, 3].includes(shipment.id) ? 'text-green-400' : shipment.id === 2 ? 'text-yellow-400' : ''}`}>
+            <span className={`ml-2 ${[1, 3].includes(shipment.id) ? 'text-[#008001]' : shipment.id === 2 ? 'text-yellow-400' : ''}`}>
               #{shipment.id}
             </span>
           </h5>

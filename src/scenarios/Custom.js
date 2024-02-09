@@ -18,8 +18,8 @@ export const Custom = ({ isWeather = false, isMap = false, isGraph = false }) =>
     const [initialDuration, setInitialDuration] = useState(null);
     const [directionsService, setDirectionsService] = useState(null);
     const request = {
-        origin: '3223 Hanover St, Palo Alto, CA 94304',
-        destination: '450 Jane Stanford Way, Stanford, CA 94305',
+        origin: 'Yi Fang Taiwan Fruit Tea, 8136 SE Foster Rd #240, Portland, OR 97206',
+        destination: '4900 Marie P DeBartolo Way, Santa Clara, CA 95054',
         travelMode: 'DRIVING',
     };
 
@@ -55,7 +55,7 @@ export const Custom = ({ isWeather = false, isMap = false, isGraph = false }) =>
 
                 let step = 0; // the index of the current step
                 let numSteps = 3000; // the number of steps in the animation
-                let delay = 2000; // the delay in milliseconds between steps
+                let delay = 500; // the delay in milliseconds between steps
 
                 // Start the animation
                 window.setInterval(() => {

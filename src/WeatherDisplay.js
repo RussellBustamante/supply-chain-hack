@@ -17,28 +17,10 @@ const WeatherDisplay = ({ lat, lng }) => {
     <div>
       {weatherData && (
         <div className="text-sm">
-          <h3>{weatherData.current.weather[0].main}</h3>
-          <p>Temperature: {weatherData.current.temp} K</p>
+          <p>Sky Condition: {weatherData.current.weather[0].main}</p>
+          <p>Temperature: {((weatherData.current.temp - 273.15) * 9/5 + 32).toFixed(2)}°F</p>
           <p>Humidity: {weatherData.current.humidity}%</p>
-          <p>Wind Speed: {weatherData.current.wind_speed}</p>
-
-          {/* <h2>Hourly Forecast</h2>
-          {weatherData.hourly.map((hour, index) => (
-            <div key={index}>
-              <h3>{new Date(hour.dt * 1000).toLocaleTimeString()}</h3>
-              <p>{hour.weather[0].main}</p>
-              <p>Temperature: {hour.temp}</p>
-            </div>
-          ))}
-
-          <h2>Daily Forecast</h2>
-          {weatherData.daily.map((day, index) => (
-            <div key={index}>
-              <h3>{new Date(day.dt * 1000).toLocaleDateString()}</h3>
-              <p>{day.weather[0].main}</p>
-              <p>Temperature: {day.temp.day}</p>
-            </div>
-          ))} */}
+          <p>Wind Speed: {weatherData.current.wind_speed}mph</p>
         </div>
       )}
     </div>

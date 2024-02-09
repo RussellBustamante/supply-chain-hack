@@ -17,8 +17,8 @@ export const Traffic = ({ isWeather = false, isMap = false, isGraph = false }) =
     const [initialDuration, setInitialDuration] = useState(null);
     const [directionsService, setDirectionsService] = useState(null);
     const request = {
-        origin: '4200 Fifth Ave, Pittsburgh, PA 15260',
-        destination: '5646 Northumberland St Pittsburgh PA 15217',
+        origin: '100 Alfred Lerner Way, Cleveland, OH 44114',
+        destination: '5087 Forbes Ave, Pittsburgh, PA 15213',
         travelMode: 'DRIVING',
     };
 
@@ -50,7 +50,7 @@ export const Traffic = ({ isWeather = false, isMap = false, isGraph = false }) =
                 const path = result.routes[0].overview_path;
                 let step = 0;
                 let numSteps = 3000;
-                let delay = 2000;
+                let delay = 500;
                 let artificialDistanceMultiplier = 1; // Start with no artificial increase
                 let distance = 1;
 
