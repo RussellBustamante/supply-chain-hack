@@ -54,8 +54,8 @@ export const Custom = ({ isWeather = false, isMap = false, isGraph = false }) =>
                 const path = result.routes[0].overview_path;
 
                 let step = 0; // the index of the current step
-                let numSteps = 3000; // the number of steps in the animation
-                let delay = 500; // the delay in milliseconds between steps
+                let numSteps = 3500; // the number of steps in the animation
+                let delay = 600; // the delay in milliseconds between steps
 
                 // Start the animation
                 window.setInterval(() => {

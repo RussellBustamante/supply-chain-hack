@@ -55,7 +55,7 @@ export const Normal = ({ isWeather = false, isMap = false, isGraph = false }) =>
 
         let step = 0; // the index of the current step
         let numSteps = 3000; // the number of steps in the animation
-        let delay = 2000; // the delay in milliseconds between steps
+        let delay = 1800; // the delay in milliseconds between steps
 
         // Start the animation
         window.setInterval(() => {

@@ -4,6 +4,7 @@ import WeatherDisplay from '../WeatherDisplay';
 import RiskChart from '../RiskChart';
 import { calculateRiskScore } from '../riskCalculator';
 
+// change these
 const dotSafetyScore = 'Satisfactory';
 const historicalReliability = 95;
 const valueOfGoods = 50000;
